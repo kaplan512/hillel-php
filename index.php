@@ -6,22 +6,9 @@ require __DIR__.'/bootstrap.php';
 $shipLoader = new ShipLoader();
 $ships = $shipLoader->getShips();
 
-$errorMessage = '';
-if (isset($_GET['error'])) {
-    switch ($_GET['error']) {
-        case 'missing_data':
-            $errorMessage = 'Не забывайте выбрать корабли для битвы!';
-            break;
-        case 'bad_ships':
-            $errorMessage = 'Вы сражаетесь с кораблями с неизвестной галактики?';
-            break;
-        case 'bad_quantities':
-            $errorMessage = 'Вы уверены в количестве кораблей дле сражения?';
-            break;
-        default:
-            $errorMessage = 'Что-то с войском не так. Попробуйте снова.';
-    }
-}
+$errorHandler = new ErrorHandler();
+$errorHandler->setErrorMessage();
+$errorMessage = $errorHandler->getErrorMessage();
 ?>
 
 <html lang="ru">
@@ -76,7 +63,7 @@ if (isset($_GET['error'])) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            
+
             <div class="battle-box center-block border">
                 <div>
                     <form method="POST" action="/battle.php">

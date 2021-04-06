@@ -35,6 +35,11 @@ $battleResult = $battleManager->battle(
         $ship2,
         $ship2Quantity
 );
+
+$sessionManager = new SessionManager();
+//$sessionManager->setFinishedFightsAmount();
+$finishedFights = $sessionManager->getFinishedFightsAmount();
+//var_dump($finishedFights);
 ?>
 
 <html lang="ru">
@@ -98,6 +103,9 @@ $battleResult = $battleManager->battle(
                 <dd><?php echo $ship2->getStrength(); ?></dd>
             </dl>
         </h3>
+        <p>
+            Всего боев проведено: <?php echo $battleResult->getAmountOfFights(); ?>
+        </p>
         <p class="text-center">
             <?php
             if (!$battleResult->isHereAWinner()): ?>
