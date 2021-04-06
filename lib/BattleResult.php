@@ -39,4 +39,10 @@ class BattleResult
     {
         return $this->winningShip !== null;
     }
+
+    public function getAmountOfFights(): int
+    {
+        $sessionManager = new SessionManager();
+        return $sessionManager->getFinishedFightsAmount();
+    }
 }

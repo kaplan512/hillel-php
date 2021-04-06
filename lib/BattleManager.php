@@ -50,6 +50,9 @@ class BattleManager
         $ship1->setStrength($ship1Health);
         $ship2->setStrength($ship2Health);
 
+        $sessionManager = new SessionManager();
+        $sessionManager->setFinishedFightsAmount();
+
         return new BattleResult(
             $winningShip,
             $losingShip,
