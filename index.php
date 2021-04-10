@@ -3,7 +3,7 @@ ini_set('display_errors', 'on');
 
 require __DIR__.'/bootstrap.php';
 
-$shipLoader = new ShipLoader();
+$shipLoader = $container->getShipLoader();
 $ships = $shipLoader->getShips();
 
 $errorMessage = '';
@@ -76,26 +76,26 @@ if (isset($_GET['error'])) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            
+
             <div class="battle-box center-block border">
                 <div>
                     <form method="POST" action="/battle.php">
                         <h2 class="text-center">Миссия</h2>
                         <input class="center-block form-control text-field" type="text" name="ship1_quantity" placeholder="Enter Number of Ships" />
-                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship1_name">
+                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship1_id">
                             <option value="">Выберите корабль</option>
-                            <?php foreach ($ships as $key => $ship): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getName(); ?></option>
+                            <?php foreach ($ships as $ship): ?>
+                                <option value="<?php echo $ship->getId(); ?>"><?php echo $ship->getName(); ?></option>
                             <?php endforeach; ?>
                         </select>
                         <br>
                         <p class="text-center">Противник</p>
                         <br>
                         <input class="center-block form-control text-field" type="text" name="ship2_quantity" placeholder="Enter Number of Ships" />
-                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship2_name">
+                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship2_id">
                             <option value="">Выберите корабль</option>
-                            <?php foreach ($ships as $key => $ship): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getName(); ?></option>
+                            <?php foreach ($ships as $ship): ?>
+                                <option value="<?php echo $ship->getId(); ?>"><?php echo $ship->getName(); ?></option>
                             <?php endforeach; ?>
                         </select>
                         <br>

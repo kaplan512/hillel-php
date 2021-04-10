@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 class Ship
 {
+    private ?int $id = null;
+
     private string $name;
 
     private int $weaponPower = 0;
@@ -22,6 +24,18 @@ class Ship
         $this->weaponPower = $weaponPower;
         $this->jediFactor = $jediFactor;
         $this->strength = $strength;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): string

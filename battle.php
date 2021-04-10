@@ -2,20 +2,24 @@
 ini_set('display_errors', 'on');
 require __DIR__ . '/bootstrap.php';
 
-$shipLoader = new ShipLoader();
+
+$shipLoader = $container->getShipLoader();
 $ships = $shipLoader->getShips();
 
-$ship1Name = $_POST['ship1_name'] ?? null;
+$ship1Id = $_POST['ship1_id'] ?? null;
 $ship1Quantity = $_POST['ship1_quantity'] ?? 1;
-$ship2Name = $_POST['ship2_name'] ?? null;
+$ship2Id = $_POST['ship2_id'] ?? null;
 $ship2Quantity = $_POST['ship2_quantity'] ?? 1;
 
-if ($ship1Name === null || $ship2Name === null) {
+$ship1 = $shipLoader -> find($ship1Id);
+$ship2 = $shipLoader -> find($ship2Id);
+
+if ($ship1Id === null || $ship2Id === null) {
     header('Location: /index.php?error=missing_data');
     die();
 }
 
-if (!isset($ships[$ship1Name], $ships[$ship2Name])) {
+if ($ship1 === null || $ship2 === null) {
     header('Location: /index.php?error=bad_ships');
     die();
 }
@@ -25,11 +29,7 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
     die();
 }
 
-$ship1 = $ships[$ship1Name];
-$ship2 = $ships[$ship2Name];
-
-$battleManager = new BattleManager();
-$battleResult = $battleManager->battle(
+$battleResult = $container->getBattleManager()->battle(
         $ship1,
         $ship1Quantity,
         $ship2,
