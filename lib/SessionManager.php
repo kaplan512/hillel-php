@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 class SessionManager
 {
+    private function sessionStart(): void
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
     public function sessionIncrement(string $key): void
     {
-        session_start();
+        $this->sessionStart();
         if (!isset($_SESSION[$key])) {
             $_SESSION[$key] = 1;
         } else {
@@ -16,9 +23,7 @@ class SessionManager
 
     public function getSessionValue(string $key): int
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->sessionStart();
         return $_SESSION[$key];
     }
 
