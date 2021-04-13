@@ -12,6 +12,8 @@ class Container
 
     private ?ShipLoader $shipLoader = null;
 
+    private ?BattleHistoryManager $getBattleHistoryManager = null;
+
     public function __construct
     (
         array $configuration
@@ -49,5 +51,14 @@ class Container
         }
 
         return $this->shipLoader;
+    }
+
+    public function getBattleHistoryManager(): BattleHistoryManager
+    {
+        if ($this->getBattleHistoryManager === null) {
+            $this->getBattleHistoryManager = new BattleHistoryManager($this->getPDO(), $this->getShipLoader());
+        }
+
+        return $this->getBattleHistoryManager;
     }
 }

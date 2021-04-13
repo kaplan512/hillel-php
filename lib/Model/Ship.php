@@ -8,11 +8,11 @@ class Ship
 
     private string $name;
 
-    private int $weaponPower = 0;
+    private int $weaponPower;
 
-    private int $jediFactor = 0;
+    private int $jediFactor;
 
-    private int $strength = 0;
+    private int $strength;
 
     public function __construct(
         string $name,

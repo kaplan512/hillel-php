@@ -77,6 +77,10 @@ if (isset($_GET['error'])) {
                 </tbody>
             </table>
 
+            <div class="">
+                <a href="/battle-history.php">Перейти к истории боев</a>
+            </div>
+
             <div class="battle-box center-block border">
                 <div>
                     <form method="POST" action="/battle.php">
