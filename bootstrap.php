@@ -12,7 +12,9 @@ $configuration = [
 require __DIR__ . '/lib/Service/Container.php';
 require __DIR__ . '/lib/Service/BattleManager.php';
 require __DIR__ . '/lib/Service/ShipLoader.php';
+require __DIR__ . '/lib/Service/BattleHistoryManager.php';
 require __DIR__ . '/lib/Model/BattleResult.php';
 require __DIR__ . '/lib/Model/Ship.php';
+require __DIR__ . '/lib/Model/BattleHistory.php';
 
 $container = new Container($configuration);

@@ -35,6 +35,15 @@ $battleResult = $container->getBattleManager()->battle(
         $ship2,
         $ship2Quantity
 );
+
+$container->getBattleHistoryManager()->setWinner(
+    $ship1->getId(),
+    $ship2->getId(),
+    $ship1Quantity,
+    $ship2Quantity,
+    $battleResult->getWinningShip()->getStrength(),
+    $battleResult->getWinningShip()->getId()
+)
 ?>
 
 <html lang="ru">

@@ -27,7 +27,7 @@ $pdoDatabase->exec('CREATE DATABASE IF NOT EXISTS ' . $databaseName);
 $pdo = new PDO('mysql:host=localhost;dbname='.$databaseName, $databaseUser, $databasePassword);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// initialize the table
+// initialize the ship table
 $pdo->exec('DROP TABLE IF EXISTS ship;');
 $pdo->exec('CREATE TABLE `ship` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,6 +37,22 @@ $pdo->exec('CREATE TABLE `ship` (
  `strength` int(4) NOT NULL,
  `is_under_repair` tinyint(1) NOT NULL,
  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
+
+// initialize the battle-history table
+$pdo->exec('DROP TABLE IF EXISTS battle_history;');
+$pdo->exec('CREATE TABLE `battle_history` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `first_participant_id` int(4) NOT NULL,
+ `second_participant_id` int(4) NOT NULL,
+ `first_participant_ships_amount` int(4) NOT NULL,
+ `second_participant_ships_amount` int(4) NOT NULL,
+ `winner_health_left` int(4) NOT NULL,
+ `winner_id` int(4) NOT NULL,
+ `date` int(4) NOT NULL,
+ PRIMARY KEY (`id`),
+ FOREIGN KEY (first_participant_id) REFERENCES ship(id),
+ FOREIGN KEY (second_participant_id) REFERENCES ship(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
 /*

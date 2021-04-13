@@ -5,6 +5,9 @@ declare(strict_types=1);
 class ShipLoader
 {
     private PDO $pdo;
+
+    private array $ships = [];
+
     public function __construct(
         PDO $pdo
     ) {
@@ -15,29 +18,39 @@ class ShipLoader
      */
     public function getShips(): array
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ship;');
-        $statement->execute();
-        $dbShips = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $ships = [];
+        if (empty($this->ships)) {
+            $statement = $this->pdo->prepare('SELECT * FROM ship;');
+            $statement->execute();
+            $dbShips = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($dbShips as $dbShip) {
-            $ships[] = $this -> transformDataToShip($dbShip);
+            foreach ($dbShips as $dbShip) {
+                $this->ships[] = $this -> transformDataToShip($dbShip);
+            }
         }
-
-        return $ships;
+        return $this->ships;
     }
 
     public function find(int $id): ?Ship
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ship WHERE id = :id;');
-        $statement->execute(['id' => $id]);
-        $dbShip = $statement->fetch(PDO::FETCH_ASSOC);
+        $neededShip = null;
+        if (empty($this->ships)) {
+            $statement = $this->pdo->prepare('SELECT * FROM ship WHERE id = :id;');
+            $statement->execute(['id' => $id]);
+            $neededShip = $statement->fetch(PDO::FETCH_ASSOC);
+            $neededShip = $this -> transformDataToShip($neededShip);
 
-        if (!$dbShip) {
-            return null;
-        };
-
-        return $this -> transformDataToShip($dbShip);
+            if (!$neededShip) {
+                return null;
+            }
+        } else {
+            foreach($this->ships as $ship) {
+                if ($id == $ship->getId()) {
+                    $neededShip = $ship;
+                    break;
+                }
+            }
+        }
+        return $neededShip;
     }
 
     private function transformDataToShip(array $data): Ship
@@ -52,9 +65,4 @@ class ShipLoader
 
         return $ship;
     }
-
-//    private function getPDO(): PDO
-//    {
-//        return $pdo;
-//    }
 }
