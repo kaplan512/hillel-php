@@ -11,10 +11,7 @@ if (isset($_GET['page'])) {
 
 $pages = $container->getBattleHistoryManager()->getPages();
 
-$showPagination = '';
-if($pages <= 1){
-    $showPagination = "style='display:none;'";
-}
+$showPagination = $pages <= 1 ? "style='display:none;'" : '';
 
 ?>
 
