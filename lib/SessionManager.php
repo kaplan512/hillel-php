@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 class SessionManager
 {
-    public function setFinishedFightsAmount()
+    public function sessionIncrement(string $key): void
     {
         session_start();
-        if (!isset($_SESSION['fights'])) {
-            $_SESSION['fights'] = 0;
+        if (!isset($_SESSION[$key])) {
+            $_SESSION[$key] = 1;
         } else {
-            $_SESSION['fights']++;
+            $_SESSION[$key]++;
         }
     }
 
-    public function getFinishedFightsAmount(): int
+    public function getSessionValue(string $key): int
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        return $_SESSION['fights'];
+        return $_SESSION[$key];
     }
 
 }

@@ -43,6 +43,6 @@ class BattleResult
     public function getAmountOfFights(): int
     {
         $sessionManager = new SessionManager();
-        return $sessionManager->getFinishedFightsAmount();
+        return $sessionManager->getSessionValue('fights');
     }
 }

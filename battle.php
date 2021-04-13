@@ -37,9 +37,7 @@ $battleResult = $battleManager->battle(
 );
 
 $sessionManager = new SessionManager();
-//$sessionManager->setFinishedFightsAmount();
-$finishedFights = $sessionManager->getFinishedFightsAmount();
-//var_dump($finishedFights);
+$finishedFights = $sessionManager->getSessionValue('fights');
 ?>
 
 <html lang="ru">
